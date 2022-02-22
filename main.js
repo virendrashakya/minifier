@@ -87,5 +87,16 @@ const readCssFileContent = async (filepath) => {
   console.log(unMinifiedFileContent);
   const minifiedFileContent = await minifyCss(unMinifiedFileContent);
   console.log(minifiedFileContent);
-  
+  const miniFiedFilepath = await calculateMinifiedFilePath(filepath)
+  writeMinifiedCssFile(miniFiedFilepath, minifiedFileContent)
+}
+
+const writeMinifiedCssFile = async (miniFiedFilepath, minifiedFileContent) => {
+  fs.writeFileSync(miniFiedFilepath, minifiedFileContent)
+}
+
+const calculateMinifiedFilePath = async (unMinifiedFilePath) => {
+  let positionOfExtension = unMinifiedFilePath.lastIndexOf(".");
+  minifiedFileName = unMinifiedFilePath.substr(0, positionOfExtension < 0 ? unMinifiedFilePath.length : positionOfExtension) + ".min.css";
+  return minifiedFileName
 }

@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const { dialog } = require('electron');
 
@@ -10,11 +10,15 @@ const autoprefixer = require('autoprefixer')
 
 const createWindow = () => {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 300,
+    height: 400,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }
+  })
+
+  ipcMain.on('openFileSelectorDialog', (event, title) => {
+    showFileSelectionDialog();
   })
 
   win.loadFile('index.html')
@@ -25,8 +29,7 @@ app.on('window-all-closed', () => {
 })
 
 app.whenReady().then(() => {
-  createWindow()
-  showFileSelectionDialog()
+  createWindow();
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })

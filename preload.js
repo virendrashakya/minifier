@@ -1,10 +1,11 @@
-window.addEventListener('DOMContentLoaded', () => {
-  const replaceText = (selector, text) => {
-    const element = document.getElementById(selector)
-    if (element) element.innerText = text
-  }
+const { ipcRenderer } = require('electron')
 
-  for (const dependency of ['chrome', 'node', 'electron']) {
-    replaceText(`${dependency}-version`, process.versions[dependency])
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById("fileSelecter").onclick = function() {myFunction()};
+
+  function myFunction() {
+    // document.getElementById("demo").innerHTML = "YOU CLICKED ME!";
+    console.log('Hello')
+    ipcRenderer.send('openFileSelectorDialog');
   }
 })

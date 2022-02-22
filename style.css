@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+}
+
+.top-header {
+  text-align: center;
+  background: cadetblue;
+  font-size: -webkit-xxx-large;
+  color: darkslategrey;
+  font-family: monospace;
+}
+
+.grid-container {
+  display: grid;
+}
+
+.grid-container {
+  display: inline-grid;
+}

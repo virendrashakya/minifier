@@ -1,46 +1,56 @@
 {
   "scripts": {
-    "start": "electron .",
-    "debug": "electron . --inspect",
-    "postinstall": "electron-builder install-app-deps",
-    "pack": "electron-builder --dir -win",
-    "dist": "electron-builder -w"
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "name": "minifier",
   "version": "1.0.0",
   "main": "main.js",
   "author": "virendra shakya",
+  "description": "This app used to mminify css files",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^17.0.1",
-    "electron-builder": "^22.14.13"
+    "@electron-forge/cli": "^6.0.0-beta.63",
+    "@electron-forge/maker-deb": "^6.0.0-beta.63",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
+    "@electron-forge/maker-zip": "^6.0.0-beta.63",
+    "electron": "^17.0.1"
   },
   "dependencies": {
     "autoprefixer": "^10.4.2",
     "cssnano": "^5.0.17",
+    "electron-squirrel-startup": "^1.0.0",
     "postcss": "^8.4.6"
   },
-  "build": {
-    "appId": "dev.virendra.minifier",
-    "productName": "Minifier",
-    "copyright": "Copyright © 2022 ${author}",
-    "extraResources": [
-      "./extraResources/**"
-    ],
-    "directories": {
-      "buildResources": "build"
-    },
-    "win": {
-      "asar": true,
-      "target": "nsis",
-      "icon": "assets/logo.ico"
-    },
-    "nsis": {
-      "installerIcon": "assets/logo.ico",
-      "installerHeaderIcon": "assets/logo.ico",
-      "deleteAppDataOnUninstall": true,
-      "runAfterFinish": true,
-      "artifactName": "Setup-${productName}-${version}.${ext}"
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "icon": "./assets/logo.ico"
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "minifier"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
     }
   }
 }

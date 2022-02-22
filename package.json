@@ -1,8 +1,10 @@
 {
   "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make"
+    "start": "electron .",
+    "debug": "electron . --inspect",
+    "postinstall": "electron-builder install-app-deps",
+    "pack": "electron-builder --dir -win",
+    "dist": "electron-builder -w"
   },
   "name": "minifier",
   "version": "1.0.0",
@@ -10,44 +12,35 @@
   "author": "virendra shakya",
   "license": "MIT",
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.63",
-    "@electron-forge/maker-deb": "^6.0.0-beta.63",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
-    "@electron-forge/maker-zip": "^6.0.0-beta.63",
-    "electron": "^17.0.1"
+    "electron": "^17.0.1",
+    "electron-builder": "^22.14.13"
   },
   "dependencies": {
     "autoprefixer": "^10.4.2",
     "cssnano": "^5.0.17",
-    "electron-squirrel-startup": "^1.0.0",
     "postcss": "^8.4.6"
   },
-  "config": {
-    "forge": {
-      "packagerConfig": {},
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "minifier"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ]
+  "build": {
+    "appId": "dev.virendra.minifier",
+    "productName": "Minifier",
+    "copyright": "Copyright © 2022 ${author}",
+    "extraResources": [
+      "./extraResources/**"
+    ],
+    "directories": {
+      "buildResources": "build"
+    },
+    "win": {
+      "asar": true,
+      "target": "nsis",
+      "icon": "assets/logo.ico"
+    },
+    "nsis": {
+      "installerIcon": "assets/logo.ico",
+      "installerHeaderIcon": "assets/logo.ico",
+      "deleteAppDataOnUninstall": true,
+      "runAfterFinish": true,
+      "artifactName": "Setup-${productName}-${version}.${ext}"
     }
   }
 }
